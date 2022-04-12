@@ -1,0 +1,34 @@
+:root {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+#arena {
+    position: relative;
+    background-color: rgb(135, 176, 238);
+    height: 90vh;
+    width: 75vw;
+    margin: 0 auto;
+}
+
+#ground {
+    position: absolute;
+    bottom: 0;
+    background-color: burlywood;
+    height: 50px;
+    width: 100%;
+}
+
+#player {
+    height: 50px;
+    width: 50px;
+    background-color: yellow;
+    margin: 0 auto;
+    transform: translate(-20vw, -100%);
+    -webkit-transform: translate(-20vw, -100%);
+    -moz-transform: translate(-20vw, -100%);
+    -ms-transform: translate(-20vw, -100%);
+    -o-transform: translate(-20vw, -100%);
+}
+
