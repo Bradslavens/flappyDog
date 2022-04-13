@@ -21,14 +21,11 @@
 }
 
 #player {
+    position: absolute;
     height: 50px;
     width: 50px;
     background-color: yellow;
-    margin: 0 auto;
-    transform: translate(-20vw, -100%);
-    -webkit-transform: translate(-20vw, -100%);
-    -moz-transform: translate(-20vw, -100%);
-    -ms-transform: translate(-20vw, -100%);
-    -o-transform: translate(-20vw, -100%);
+    left: 20vw;
+    bottom: 50px;
 }
 
