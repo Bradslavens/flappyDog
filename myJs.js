@@ -17,12 +17,12 @@ window.addEventListener('keydown', jump)
 
 function jump(e){
     if(e.code = "Space"){
-        for(let i=-10; i<=10; i++){
-            sto(i)
+        for(let i=-10, j=0; i<=10, j<=20; i++, j++){
+            sto(i,j)
         }
 
-        function sto(i){
-            setTimeout(jumper, 50 * i, i)
+        function sto(i,j){
+            setTimeout(jumper, 50 * j, i)
         }
         let offset = 50
         function jumper(i){
