@@ -9,6 +9,8 @@
 const JUMP_HEIGHT = 10
 const RANGE = JUMP_HEIGHT
 const JUMP_SPEED = 1000
+const JUMP_FACTOR = 20
+const JUMP_DELAY = 50
 let jumper = 0
 
 
@@ -16,13 +18,13 @@ let player = document.getElementById("player")
 window.addEventListener('keydown', jump)
 
 function jump(e){
-    if(e.code = "Space"){
-        for(let i=-10, j=0; i<=10, j<=20; i++, j++){
+    if(e.code === "Space"){
+        for(let i=-JUMP_HEIGHT, j=0; i<=JUMP_HEIGHT, j<=JUMP_FACTOR; i++, j++){
             sto(i,j)
         }
 
         function sto(i,j){
-            setTimeout(jumper, 50 * j, i)
+            setTimeout(jumper, JUMP_DELAY * j, i)
         }
         let offset = 50
         function jumper(i){
@@ -32,28 +34,4 @@ function jump(e){
             player.style.bottom = `${heightIncrement}px`
         }
     }
-//     if(e.code == 'Space'){
-//         for(let i = 0; i< 10; i++){
-//             (function(i){
-//                 jumper = setInterval(() => {
-//                     console.log(`hello ${i}`)
-//                 }, 1000);
-//             })(i)
-//         }
-//         clearInterval(jumper)
-        // let heightIncrement = 0
-        // let i = -JUMP_HEIGHT
-        // i<=JUMP_HEIGHT
-        // i++
-        // jumper = setInterval(jumpArc, JUMP_SPEED);
-    // }
 }
-
-// let heightIncrement = 0
-// let i = -JUMP_HEIGHT
-// function jumpArc(){
-//     heightIncrement = (-(i**2)) + RANGE**2
-//     player.style.bottom = `${heightIncrement}px`
-//     i++
-//     if(i<=JUMP_HEIGHT) clearInterval(jumper)
-// }
