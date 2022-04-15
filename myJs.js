@@ -12,21 +12,27 @@ const JUMP_SPEED = 1000
 const JUMP_FACTOR = 20
 const JUMP_DELAY = 50
 let jumper = 0
-let jumpInterval = 1000
+let jumpInterval = 100
 
 
 let player = document.getElementById("player")
 window.addEventListener('keydown', handleKeydown)
 let jumpId = 0
-let offset = window.getComputedStyle(player, null).getPropertyValue("bottom")
+let regex = /\d+/
 function handleKeydown(e){
     if(e.code === "Space"){
-        let i = -10
         if(jumpId !== 0){ clearInterval(jumpId)}
+        let offset = window.getComputedStyle(player, null).getPropertyValue("bottom").match(regex)
+        offset = Number(offset)
+        console.log(`offsest ${offset}`)
+        let i = -10
         jumpId = setInterval(() => {
-            let heightIncrement = ((-(i**2))) + RANGE**2 +50
-            console.log(`height inc ${heightIncrement}`)
+            let heightIncrement = ((-(i**2))) + RANGE**2 + offset
+            console.log(`offsest ${offset}`)
+            // console.log(`height inc ${heightIncrement}`)
             player.style.bottom = `${heightIncrement}px`
+            console.log(` bottom ${Number(window.getComputedStyle(player, null).getPropertyValue("bottom").match(regex))}`)
+            if(Number(window.getComputedStyle(player, null).getPropertyValue("bottom").match(regex)) < 50) clearInterval(jumpId)
             i++
         }, jumpInterval);
     }
