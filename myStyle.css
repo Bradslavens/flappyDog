@@ -29,3 +29,12 @@
     bottom: 50px;
 }
 
+.target {
+    position: absolute;
+    background-color: brown;
+    height: 50px;
+    width: 50px;
+    left: 1244px;
+    bottom: 50%;
+}
+
