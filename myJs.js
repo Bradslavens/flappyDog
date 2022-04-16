@@ -23,10 +23,13 @@ function handleKeydown(e){
         offset = Number(offset)
         let i = -10
         jumpId = setInterval(() => {
-                if(offset <= 49.9) clearInterval(jumpId)
-                let heightIncrement = ((-(i**2))) + JUMP_HEIGHT**2 + offset
-                player.style.bottom = `${heightIncrement}px`
-                i+= .25
+            i+= .25 // speed of the jump
+            let heightIncrement = ((-(i**2))) + JUMP_HEIGHT**2 + offset
+            if(heightIncrement <= 50) clearInterval(jumpId)
+            player.style.bottom = `${heightIncrement}px`
+            console.log(heightIncrement)
+            // console.log(`player style bottom ${player.style.bottom}`)
+            // if(player.style.bottom.match(regex)[0] <= 50) clearInterval(jumpId)
         }, jumpInterval);
     }
 
