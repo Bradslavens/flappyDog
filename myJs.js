@@ -12,7 +12,7 @@ const JUMP_SPEED = 1000
 const JUMP_FACTOR = 20
 const JUMP_DELAY = 50
 let jumper = 0
-let jumpInterval = 100
+let jumpInterval = 14
 
 
 let player = document.getElementById("player")
@@ -23,37 +23,19 @@ function handleKeydown(e){
     if(e.code === "Space"){
         if(jumpId !== 0){ clearInterval(jumpId)}
         let offset = window.getComputedStyle(player, null).getPropertyValue("bottom").match(regex)
+        if(offset <= 50) offset = 50
         offset = Number(offset)
-        console.log(`offsest ${offset}`)
         let i = -10
+        let speed = 0
         jumpId = setInterval(() => {
-            let heightIncrement = ((-(i**2))) + RANGE**2 + offset
-            console.log(`offsest ${offset}`)
-            // console.log(`height inc ${heightIncrement}`)
-            player.style.bottom = `${heightIncrement}px`
-            console.log(` bottom ${Number(window.getComputedStyle(player, null).getPropertyValue("bottom").match(regex))}`)
-            if(Number(window.getComputedStyle(player, null).getPropertyValue("bottom").match(regex)) < 50) clearInterval(jumpId)
-            i++
+            if(speed%10 == 0){
+                let heightIncrement = ((-(i**2))) + RANGE**2 + offset
+                player.style.bottom = `${heightIncrement}px`
+                i++
+            }
+            
+            speed++
         }, jumpInterval);
     }
-    // if(e.code === "Space"){
-    //     let i=-JUMP_HEIGHT
-    //     let j= 0
-    //     while(i<=JUMP_HEIGHT && j<=JUMP_FACTOR){
-    //         sto(i,j)
-    //         i++
-    //         j++
-    //     }
 
-    //     function sto(i,j){
-    //         setTimeout(jumper, JUMP_DELAY * j, i)
-    //     }
-    //     let offset = 50
-    //     function jumper(i){
-    //         // heightIncrement = (-(i**2)) + RANGE**2
-    //         let heightIncrement = ((-(i**2)) + RANGE**2) + offset
-    //         console.log(heightIncrement)
-    //         player.style.bottom = `${heightIncrement}px`
-    //     }
-    // }
 }
