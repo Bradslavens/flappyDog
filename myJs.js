@@ -11,6 +11,7 @@ const JUMP_SPEED = 1000
 const JUMP_FACTOR = 20
 const FPS = 60
 let fpsms = 1000/FPS
+let canJump = false
 
 /// handle player jumping 
 let player = document.getElementById("player")
@@ -19,11 +20,13 @@ let jumpId = 0
 let regex = /\d+/
 function handleKeydown(e){
     if(e.code === "Space"){
+    if(canJump){
         if(jumpId !== 0){ clearInterval(jumpId)}
         let offset = window.getComputedStyle(player, null).getPropertyValue("bottom").match(regex)
         offset = Number(offset)
         let i = -10
         jumpId = setInterval(() => {
+            if(!canJump) clearInterval(jumpId)
             i+= .25 // speed of the jump
             let heightIncrement = ((-(i**2))) + JUMP_HEIGHT**2 + offset
             if(heightIncrement <= 50) clearInterval(jumpId)
@@ -32,6 +35,8 @@ function handleKeydown(e){
             // console.log(`player style bottom ${player.style.bottom}`)
             // if(player.style.bottom.match(regex)[0] <= 50) clearInterval(jumpId)
         }, fpsms);
+    }
+    
     }
 
 }
@@ -45,10 +50,12 @@ const targetSpeed = 1
 let targetLoopCount = 0
 
 function start() {
+    canJump = true
     gmIntervalId= setInterval(gameManager, fpsms)
 }
 
 function stop() {
+    canJump = false
     console.log("stop")
     clearInterval(gmIntervalId)
 }
