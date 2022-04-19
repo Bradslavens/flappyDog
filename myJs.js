@@ -13,6 +13,7 @@ const FPS = 60
 let fpsms = 1000/FPS
 const targetSpawnRate = 3000
 let canJump = false
+const GROUND = document.getElementById("ground")
 
 /// handle player jumping 
 let player = document.getElementById("player")
@@ -22,18 +23,22 @@ let regex = /\d+/
 function handleKeydown(e){
     if(e.code === "Space"){
     if(canJump){
+        console.log(`jump ${canJump}`)
         if(jumpId !== 0){ clearInterval(jumpId)}
             let offset = window.getComputedStyle(player, null).getPropertyValue("bottom").match(regex)
             offset = Number(offset)
             let i = -10
             jumpId = setInterval(() => {
                 if(!canJump) clearInterval(jumpId)
+                // console.log(`jumping i ${i} jh ${JUMP_HEIGHT} offset ${offset}`)
                 i+= .25 // speed of the jump
                 let heightIncrement = ((-(i**2))) + JUMP_HEIGHT**2 + offset
+                // console.log(`height increment ${heightIncrement}`)
                 if(heightIncrement <= 50) clearInterval(jumpId)
                 player.style.bottom = `${heightIncrement}px`
-                if(player.offsetTop > 542 ) player.style.bottom = "50px"
-                // if(player.style.bottom.match(regex)[0] <= 50) clearInterval(jumpId)
+                console.log(`player ot ${player.offsetTop} ground ot ${GROUND.offsetTop} h ot ${player.offsetHeight}`)
+                if(player.offsetTop > (GROUND.offsetTop + player.offsetHeight) ) clearInterval(jumpId)
+                // if(player.style.bottom.match(regex)[0] < 50) clearInterval(jumpId)
             }, fpsms);
         }
     
