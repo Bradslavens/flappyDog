@@ -23,19 +23,19 @@ function handleKeydown(e){
     if(e.code === "Space"){
     if(canJump){
         if(jumpId !== 0){ clearInterval(jumpId)}
-        let offset = window.getComputedStyle(player, null).getPropertyValue("bottom").match(regex)
-        offset = Number(offset)
-        let i = -10
-        jumpId = setInterval(() => {
-            if(!canJump) clearInterval(jumpId)
-            i+= .25 // speed of the jump
-            let heightIncrement = ((-(i**2))) + JUMP_HEIGHT**2 + offset
-            if(heightIncrement <= 50) clearInterval(jumpId)
-            player.style.bottom = `${heightIncrement}px`
-            if(player.offsetTop > 542 ) player.style.bottom = "50px"
-            // if(player.style.bottom.match(regex)[0] <= 50) clearInterval(jumpId)
-        }, fpsms);
-    }
+            let offset = window.getComputedStyle(player, null).getPropertyValue("bottom").match(regex)
+            offset = Number(offset)
+            let i = -10
+            jumpId = setInterval(() => {
+                if(!canJump) clearInterval(jumpId)
+                i+= .25 // speed of the jump
+                let heightIncrement = ((-(i**2))) + JUMP_HEIGHT**2 + offset
+                if(heightIncrement <= 50) clearInterval(jumpId)
+                player.style.bottom = `${heightIncrement}px`
+                if(player.offsetTop > 542 ) player.style.bottom = "50px"
+                // if(player.style.bottom.match(regex)[0] <= 50) clearInterval(jumpId)
+            }, fpsms);
+        }
     
     }
 
@@ -50,12 +50,14 @@ const startButton = document.getElementById("start")
 const stopButton = document.getElementById("stop")
 const targetSpeed = 1
 let targetLoopCount = 0
+let collisionIntervalId = 0
 
 function start() {
     canJump = true
     spawnIntervalId= setInterval(spawnTarget, targetSpawnRate)
     startButton.setAttribute("disabled", "")
     stopButton.removeAttribute("disabled")
+
 }
 
 function stop() {
@@ -72,6 +74,20 @@ function spawnTarget(){
     let height = Math.floor(Math.random() * 90)
     target.style.bottom = `${height}%`
     arena.insertAdjacentElement("afterbegin", target)
+}
+
+// handle collision
+const collisionInterval = 16
+collisionIntervalId = setInterval(checkCollision, collisionInterval)
+
+function checkCollision(){
+    let targets = document.querySelectorAll(".target")
+    for(let i = 0; i<targets.length; i++){
+        if(player.offsetTop > (targets[i].offsetTop - 50) && player.offsetLeft > targets[i].offsetLeft && player.offsetLeft < (targets[i].offsetLeft + 50) ){
+            player.remove()
+            targets[i].remove()
+        }
+    }
 }
 
 
