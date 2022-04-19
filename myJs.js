@@ -11,6 +11,7 @@ const JUMP_SPEED = 1000
 const JUMP_FACTOR = 20
 const FPS = 60
 let fpsms = 1000/FPS
+const targetSpawnRate = 3000
 let canJump = false
 
 /// handle player jumping 
@@ -31,8 +32,7 @@ function handleKeydown(e){
             let heightIncrement = ((-(i**2))) + JUMP_HEIGHT**2 + offset
             if(heightIncrement <= 50) clearInterval(jumpId)
             player.style.bottom = `${heightIncrement}px`
-            console.log(heightIncrement)
-            // console.log(`player style bottom ${player.style.bottom}`)
+            if(player.offsetTop > 542 ) player.style.bottom = "50px"
             // if(player.style.bottom.match(regex)[0] <= 50) clearInterval(jumpId)
         }, fpsms);
     }
@@ -42,45 +42,32 @@ function handleKeydown(e){
 }
 
 // game manager
-let gmIntervalId = 0
+let spawnIntervalId = 0
 let loopCounter = 0
 let targetIncrement = .50
 let arena = document.getElementById("arena")
+const startButton = document.getElementById("start")
+const stopButton = document.getElementById("stop")
 const targetSpeed = 1
 let targetLoopCount = 0
 
 function start() {
     canJump = true
-    gmIntervalId= setInterval(gameManager, fpsms)
+    spawnIntervalId= setInterval(spawnTarget, targetSpawnRate)
+    startButton.setAttribute("disabled", "")
+    stopButton.removeAttribute("disabled")
 }
 
 function stop() {
+    console.log(`player offset top ${player.offsetTop}`)
+    clearInterval(spawnIntervalId)
     canJump = false
-    console.log("stop")
-    clearInterval(gmIntervalId)
-}
-
-function gameManager(){
-    if(loopCounter%100 == 0) spawnTarget()
-    moveTarget()
-    loopCounter++
-
-}
-
-function moveTarget(){
-    let targets = document.querySelectorAll(".target")
-    for(let i = 0; i<targets.length; i++){
-        let posLeft = targets[i].offsetLeft
-        console.log(typeof(posLeft))
-        console.log(`pos left : ${posLeft} target speed: ${targetSpeed}`)
-        let posL = posLeft - targetSpeed
-        targets[i].style.left = `${posL}px`
-    }
+    startButton.removeAttribute("disabled")
+    stopButton.setAttribute("disabled", true)
 }
 
 function spawnTarget(){
     const target = document.createElement("div")
-    console.log(typeof(target))
     target.setAttribute("class", "target")
     let height = Math.floor(Math.random() * 90)
     target.style.bottom = `${height}%`

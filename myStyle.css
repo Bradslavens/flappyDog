@@ -2,6 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 #arena {
@@ -36,5 +37,12 @@
     width: 50px;
     left: 1244px;
     bottom: 50%;
+    animation-duration: 10s;
+    animation-timing-function: linear;
+    animation-name: moveLeft;
 }
 
+@keyframes moveLeft {
+    0% {  left: 1244px;  }
+    100% { left: -200px; }
+}
